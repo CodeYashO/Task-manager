@@ -1,6 +1,7 @@
 import { useState , useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../Css/AddTask.css"
 
 const AddTask = () => {
     const navigate = useNavigate()
@@ -35,12 +36,16 @@ const AddTask = () => {
 
     return (
         <div className="container">
-        
-            <form onSubmit={submitHandler}>
-                <input type="text" name="title" onChange={changeHandler} placeholder="title of task" required/>
-                <textarea type="text" rows="10" cols="50" name="description" placeholder="description" onChange={changeHandler} required></textarea>
-                <input type="submit" />
-            </form>
+            <div>
+                <h1>Add a New Task</h1>
+            </div>
+            <div className="formdiv">
+                <form onSubmit={submitHandler}>
+                    <input type="text" name="title" onChange={changeHandler} placeholder="title of task" required/>
+                    <textarea type="text" rows="10" cols="50" name="description" placeholder="description" onChange={changeHandler} required></textarea>
+                    <input type="submit" className="submit-button" />
+                </form>
+            </div>
         </div>
     )
 }

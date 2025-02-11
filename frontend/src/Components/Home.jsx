@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AddTask from "./AddTask";
 import axios from "axios";
+import "../Css/Home.css"
 
 const Home = () => {
     const token = localStorage.getItem("token");
@@ -89,22 +90,22 @@ const Home = () => {
                     {tasks.map((task) => (
                         <div key={task._id} className="task-card">
                             {editTask === task._id ? (
-                                <div>
+                                <div className="edit-popup">
                                     <input
                                         type="text"
                                         value={newTitle}
                                         onChange={(e) => setNewTitle(e.target.value)}
-                                        className="border p-2 w-full mb-2"
+                                        className="title"
                                     />
                                     <textarea
                                         value={newDescription}
                                         onChange={(e) => setNewDescription(e.target.value)}
-                                        className="border p-2 w-full mb-2"
+                                        className="description"
                                     />
                                     <select 
-                                        value={status} 
+                                        value={status } 
                                         onChange={(e) => setStatus(e.target.value)} 
-                                        className="border p-2 w-full mb-2"
+                                        className="option"
                                     >
                                         <option value="Pending">Pending</option>
                                         <option value="Completed">Completed</option>
@@ -126,7 +127,7 @@ const Home = () => {
                                 <div>
                                     <h2 className="task-title">{task.title}</h2>
                                     <p className="task-description">{task.description}</p>
-                                    <span className={`task-status ${task.status === "completed" ? "bg-green" : "bg-yellow"}`}>
+                                    <span className="task-status">
                                         {task.status}
                                     </span>
                                     <div className="mt-4">
@@ -135,7 +136,7 @@ const Home = () => {
                                                 setEditTask(task._id);
                                                 setNewTitle(task.title);
                                                 setNewDescription(task.description);
- setStatus(task.status); // Set the current status for editing
+                                                setStatus(task.status);
                                             }} 
                                             className="edit-button"
                                         >

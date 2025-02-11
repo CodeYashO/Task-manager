@@ -1,0 +1,120 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(198, 198, 198);
+}
+
+.add-task-button {
+    border-radius: 10px;
+    border: none;
+    height: 50px;
+    font-size: larger;
+    transform: translate(320px , 10px);
+    width: 50%;
+}
+
+.task-card {
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgb(166, 166, 204);
+    width: 90%;
+    height: 150px;
+    border-radius: 20px;
+    transform: translateX(70px);
+}
+
+.task-card p {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.task-card h2 {
+    text-align: center;
+}
+
+.edit-button {
+    position: absolute;
+    bottom: 10px;
+    left: 20%;
+    border-radius: 10px;
+    border: none;
+    width: 200px;
+    height: 30px;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: 10px;
+    left: 40%;
+    border-radius: 10px;
+    border: none;
+    width: 200px;
+    height: 30px;
+}
+
+.task-status {
+    position: absolute;
+    bottom: 10px;
+    left: 60%;
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgb(234, 135, 135);
+}
+
+.edit-popup {
+    position: relative;
+    background-color: rgb(166, 166, 204);
+    width: 90%;
+    height: inherit;
+    border-radius: 20px;
+    transform: translate(70px);
+}
+
+.edit-popup input{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    height: 20px;
+    width: 300px;
+}
+
+.edit-popup textarea {
+    position: absolute;
+    left: 10px;
+    height: 80px;
+    width: 700px;
+    top: 50px;
+}
+
+.edit-popup select {
+    position: absolute;
+    top: 10px;
+    height: 30px;
+    width: 100px;
+    left: 350px;
+}
+
+.save-button{
+    position: absolute;
+    bottom: 10px;
+    width: 100px;
+    right: 120px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(234, 135, 135);
+}
+
+.cancel-button{
+    position: absolute;
+    bottom: 10px;
+    width: 100px;
+    right: 0;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+}
