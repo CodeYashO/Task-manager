@@ -11,6 +11,13 @@
     font-size: larger;
     transform: translate(320px , 10px);
     width: 50%;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.add-task-button:hover {
+    background-color: black;
+    color: white;
 }
 
 .task-card {
@@ -22,6 +29,7 @@
     height: 150px;
     border-radius: 20px;
     transform: translateX(70px);
+    box-shadow: 5px 10px 20px #2323238e;
 }
 
 .task-card p {
@@ -42,6 +50,13 @@
     border: none;
     width: 200px;
     height: 30px;
+    transition: all 0.5s;
+}
+
+.edit-button:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
 }
 
 .delete-button {
@@ -52,6 +67,13 @@
     border: none;
     width: 200px;
     height: 30px;
+    transition: all .5s;
+}
+
+.delete-button:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
 }
 
 .task-status {
@@ -62,7 +84,7 @@
     height: 30px;
     text-align: center;
     border-radius: 10px;
-    background-color: rgb(234, 135, 135);
+    background-color: rgb(135, 234, 227);
 }
 
 .edit-popup {
@@ -80,6 +102,9 @@
     top: 10px;
     height: 20px;
     width: 300px;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
 }
 
 .edit-popup textarea {
@@ -88,6 +113,9 @@
     height: 80px;
     width: 700px;
     top: 50px;
+    border: none;
+    border-radius: 15px;
+    padding-left: 10px;
 }
 
 .edit-popup select {
@@ -96,6 +124,8 @@
     height: 30px;
     width: 100px;
     left: 350px;
+    border: none;
+    border-radius: 10px;
 }
 
 .save-button{
@@ -107,6 +137,12 @@
     border-radius: 10px;
     border: none;
     background-color: rgb(234, 135, 135);
+    transition: all .5s;
+}
+
+.save-button:hover {
+    background-color: black;
+    color: white;
 }
 
 .cancel-button{
@@ -117,4 +153,10 @@
     height: 30px;
     border-radius: 10px;
     border: none;
+    transition: all .5s;
+}
+
+.cancel-button:hover {
+    background-color: black;
+    color: white;
 }

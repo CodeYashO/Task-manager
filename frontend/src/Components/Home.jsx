@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import AddTask from "./AddTask";
 import axios from "axios";
-import "../Css/Home.css"
+import "../Css/Home.css";
 
 const Home = () => {
     const token = localStorage.getItem("token");
@@ -13,7 +13,7 @@ const Home = () => {
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-        const findUser  = async () => {
+        const findUser = async () => {
             try {
                 const response = await axios.get("http://localhost:5000/api/auth/verify-token", {
                     headers: { Authorization: `Bearer ${token}` },
@@ -23,20 +23,24 @@ const Home = () => {
                 console.error("Error fetching tasks:", error);
             }
         };
-        findUser ();
+        findUser();
     }, []);
 
     const updateTask = async (taskId) => {
         try {
-            const response = await axios.put(`http://localhost:5000/api/auth/update-task/${taskId}`, {
-                title: newTitle,
-                description: newDescription,
-                status: status, // Send the selected status
-            }, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const response = await axios.put(
+                `http://localhost:5000/api/auth/update-task/${taskId}`,
+                {
+                    title: newTitle,
+                    description: newDescription,
+                    status: status,
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
 
-            setTasks(tasks.map(task => task._id === taskId ? response.data.task : task));
+            setTasks(tasks.map((task) => (task._id === taskId ? response.data.task : task)));
             setEditTask(null);
         } catch (error) {
             console.error("Error updating task:", error);
@@ -49,7 +53,7 @@ const Home = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            setTasks(tasks.filter(task => task._id !== taskId));
+            setTasks(tasks.filter((task) => task._id !== taskId));
         } catch (error) {
             console.error("Error deleting task:", error);
         }
@@ -57,25 +61,14 @@ const Home = () => {
 
     return (
         <div className="container">
-            <button 
-                onClick={() => {
-                    if(tasks.length === 0) {
-                        return
-                    }
-                    setShowPopup(true)
-                }}
-                className="add-task-button"
-            >
+            <button onClick={() => setShowPopup(true)} className="add-task-button">
                 Add Task
             </button>
 
             {showPopup && (
                 <div className="popup">
                     <div className="popup-content">
-                        <button
-                            onClick={() => setShowPopup(false)}
-                            className="close-button"
-                        >
+                        <button onClick={() => setShowPopup(false)} className="close-button">
                             X
                         </button>
                         <AddTask />
@@ -83,9 +76,7 @@ const Home = () => {
                 </div>
             )}
 
-            {tasks.length === 0 ? (
-                <AddTask />
-            ) : (
+            {tasks.length > 0 && (
                 <div className="task-grid">
                     {tasks.map((task) => (
                         <div key={task._id} className="task-card">
@@ -102,24 +93,18 @@ const Home = () => {
                                         onChange={(e) => setNewDescription(e.target.value)}
                                         className="description"
                                     />
-                                    <select 
-                                        value={status } 
-                                        onChange={(e) => setStatus(e.target.value)} 
+                                    <select
+                                        value={status}
+                                        onChange={(e) => setStatus(e.target.value)}
                                         className="option"
                                     >
                                         <option value="Pending">Pending</option>
                                         <option value="Completed">Completed</option>
                                     </select>
-                                    <button 
-                                        onClick={() => updateTask(task._id)} 
-                                        className="save-button"
-                                    >
+                                    <button onClick={() => updateTask(task._id)} className="save-button">
                                         Save
                                     </button>
-                                    <button 
-                                        onClick={() => setEditTask(null)} 
-                                        className="cancel-button"
-                                    >
+                                    <button onClick={() => setEditTask(null)} className="cancel-button">
                                         Cancel
                                     </button>
                                 </div>
@@ -127,25 +112,20 @@ const Home = () => {
                                 <div>
                                     <h2 className="task-title">{task.title}</h2>
                                     <p className="task-description">{task.description}</p>
-                                    <span className="task-status">
-                                        {task.status}
-                                    </span>
+                                    <span className="task-status">{task.status}</span>
                                     <div className="mt-4">
-                                        <button 
-                                            onClick={() => { 
+                                        <button
+                                            onClick={() => {
                                                 setEditTask(task._id);
                                                 setNewTitle(task.title);
                                                 setNewDescription(task.description);
                                                 setStatus(task.status);
-                                            }} 
+                                            }}
                                             className="edit-button"
                                         >
                                             Edit
                                         </button>
-                                        <button 
-                                            onClick={() => deleteTask(task._id)} 
-                                            className="delete-button"
-                                        >
+                                        <button onClick={() => deleteTask(task._id)} className="delete-button">
                                             Delete
                                         </button>
                                     </div>

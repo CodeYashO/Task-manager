@@ -42,7 +42,7 @@ const AddTask = () => {
             <div className="formdiv">
                 <form onSubmit={submitHandler}>
                     <input type="text" name="title" onChange={changeHandler} placeholder="title of task" required/>
-                    <textarea type="text" rows="10" cols="50" name="description" placeholder="description" onChange={changeHandler} required></textarea>
+                    <textarea type="text" rows="10" cols="50" name="description" placeholder="description..." onChange={changeHandler} required></textarea>
                     <input type="submit" className="submit-button" />
                 </form>
             </div>
