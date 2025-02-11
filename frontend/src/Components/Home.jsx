@@ -9,7 +9,7 @@ const Home = () => {
     const [editTask, setEditTask] = useState(null);
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
-    const [status, setStatus] = useState("Pending"); // Default status
+    const [status, setStatus] = useState("Pending")
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
