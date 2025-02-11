@@ -28,12 +28,12 @@ exports.addTask = async (req , res) => {
 }
  
 exports.updateTask = async (req , res) => {
-    const { title, description } = req.body;
+    const { title, description , status } = req.body;
     console.log(req.body)
     try {
         const updatedTask = await Task.findByIdAndUpdate(
             req.params.id,
-            { title, description },
+            { title, description , status },
             { new: true }
         );
         res.status(200).json({ message: "Task updated", task: updatedTask });

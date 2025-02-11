@@ -8,10 +8,11 @@ const Home = () => {
     const [editTask, setEditTask] = useState(null);
     const [newTitle, setNewTitle] = useState("");
     const [newDescription, setNewDescription] = useState("");
+    const [status, setStatus] = useState("Pending"); // Default status
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-        const findUser = async () => {
+        const findUser  = async () => {
             try {
                 const response = await axios.get("http://localhost:5000/api/auth/verify-token", {
                     headers: { Authorization: `Bearer ${token}` },
@@ -21,7 +22,7 @@ const Home = () => {
                 console.error("Error fetching tasks:", error);
             }
         };
-        findUser();
+        findUser ();
     }, []);
 
     const updateTask = async (taskId) => {
@@ -29,6 +30,7 @@ const Home = () => {
             const response = await axios.put(`http://localhost:5000/api/auth/update-task/${taskId}`, {
                 title: newTitle,
                 description: newDescription,
+                status: status, // Send the selected status
             }, {
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -53,20 +55,25 @@ const Home = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container">
             <button 
-                onClick={() => setShowPopup(true)}
-                className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+                onClick={() => {
+                    if(tasks.length === 0) {
+                        return
+                    }
+                    setShowPopup(true)
+                }}
+                className="add-task-button"
             >
                 Add Task
             </button>
 
             {showPopup && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded shadow-lg w-96">
+                <div className="popup">
+                    <div className="popup-content">
                         <button
                             onClick={() => setShowPopup(false)}
-                            className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded"
+                            className="close-button"
                         >
                             X
                         </button>
@@ -78,9 +85,9 @@ const Home = () => {
             {tasks.length === 0 ? (
                 <AddTask />
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="task-grid">
                     {tasks.map((task) => (
-                        <div key={task._id} className="border p-4 rounded-lg shadow-lg">
+                        <div key={task._id} className="task-card">
                             {editTask === task._id ? (
                                 <div>
                                     <input
@@ -94,24 +101,32 @@ const Home = () => {
                                         onChange={(e) => setNewDescription(e.target.value)}
                                         className="border p-2 w-full mb-2"
                                     />
+                                    <select 
+                                        value={status} 
+                                        onChange={(e) => setStatus(e.target.value)} 
+                                        className="border p-2 w-full mb-2"
+                                    >
+                                        <option value="Pending">Pending</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
                                     <button 
                                         onClick={() => updateTask(task._id)} 
-                                        className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                                        className="save-button"
                                     >
                                         Save
                                     </button>
                                     <button 
                                         onClick={() => setEditTask(null)} 
-                                        className="bg-gray-500 text-white px-4 py-2 rounded"
+                                        className="cancel-button"
                                     >
                                         Cancel
                                     </button>
                                 </div>
                             ) : (
                                 <div>
-                                    <h2 className="text-xl font-bold">{task.title}</h2>
-                                    <p className="text-gray-700">{task.description}</p>
-                                    <span className={`px-3 py-1 text-white text-sm rounded ${task.status === "completed" ? "bg-green-500" : "bg-yellow-500"}`}>
+                                    <h2 className="task-title">{task.title}</h2>
+                                    <p className="task-description">{task.description}</p>
+                                    <span className={`task-status ${task.status === "completed" ? "bg-green" : "bg-yellow"}`}>
                                         {task.status}
                                     </span>
                                     <div className="mt-4">
@@ -120,14 +135,15 @@ const Home = () => {
                                                 setEditTask(task._id);
                                                 setNewTitle(task.title);
                                                 setNewDescription(task.description);
+ setStatus(task.status); // Set the current status for editing
                                             }} 
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                                            className="edit-button"
                                         >
                                             Edit
                                         </button>
                                         <button 
                                             onClick={() => deleteTask(task._id)} 
-                                            className="bg-red-500 text-white px-4 py-2 rounded"
+                                            className="delete-button"
                                         >
                                             Delete
                                         </button>
