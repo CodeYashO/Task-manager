@@ -11,6 +11,7 @@ const Home = () => {
     const [newDescription, setNewDescription] = useState("");
     const [status, setStatus] = useState("Pending")
     const [showPopup, setShowPopup] = useState(false);
+    const [user , setuser] = useState({});
 
     useEffect(() => {
         const findUser = async () => {
@@ -18,6 +19,7 @@ const Home = () => {
                 const response = await axios.get("http://localhost:5000/api/auth/verify-token", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
+                setuser(response.data.user);
                 setTasks(response.data.user.Tasks);
             } catch (error) {
                 console.error("Error fetching tasks:", error);

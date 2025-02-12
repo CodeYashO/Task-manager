@@ -1,10 +1,11 @@
 const mongoose = require("mongoose")
 const Task = require("../Models/Task")
 const User = require("../Models/User")
+const jwt = require("jsonwebtoken")
 
 exports.addTask = async (req , res) => {
-    const {title , description , userEmail} = req.body
     console.log(req.body)
+    const {title , description , userEmail} = req.body
 
     try{
         const task = new Task({
@@ -44,9 +45,28 @@ exports.updateTask = async (req , res) => {
 
 exports.deleteTask = async (req , res) => {
     try {
+        const token = req.headers.authorization?.split(" ")[1];
+         
+        if (!token) {
+            return res.status(401).json({valid : false , message: "No token provided" });
+        }
+        const decoded = jwt.verify(token, process.env.JWT_TOKEN_KEY);
+        const user = await User.findById(decoded.userId).populate('Tasks');
+        console.log(user);
+
+        if(!user) {
+            return res.status(401).json({valid : false , message: "User not found" });
+        }
+
         await Task.findByIdAndDelete(req.params.id);
+
+        await User.findByIdAndUpdate(
+            decoded.userId,
+            { $pull: { Tasks: req.params.id } },
+            { new: true }
+        );
         res.status(200).json({ message: "Task deleted" });
     } catch (err) {
         res.status(500).json({ message: "Server Error" });
-    }
+    } 
 }
